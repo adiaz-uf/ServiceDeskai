@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Space Grotesk', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+      },
       colors: {
         'ui-primary': 'var(--color-ui-primary)',         // (Blue)
         'ui-secondary': 'var(--color-ui-secondary)',     // (Card/Modal Background)
