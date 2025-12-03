@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ui-primary: #1C3B65;     /* Dark Blue: Main action buttons, active links */
+  --color-ui-secondary: #EFEFEF;   /* Light Gray: Card backgrounds, secondary containers */
+  --color-ui-background: #FFFFFF;  /* White: Main app background */
+
+  /* Text Colors */
+  --color-text-primary: #1A1A1A;   /* Near Black: Headings and main content */
+  --color-text-secondary: #6D6D72; /* Medium Gray: Secondary text, labels, descriptions */
+
+  /* Status/Semantic Colors - Important for Ticket States (e.g., Normal vs Admin view) */
+  --color-status-success: #4CAF50; /* Green: Resolved/Closed/Success */
+  --color-status-warning: #FF9800; /* Orange: In Progress/On Hold/Pending */
+  --color-status-error: #F44336;   /* Red: Urgent/Open/Critical/Error */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-ui-secondary);
+  color: var(--color-text-primary);
+}
