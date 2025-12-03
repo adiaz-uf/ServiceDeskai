@@ -40,7 +40,7 @@ function ProfilePage() {
               </div>
             </div>
 
-            <div className="mt-8 space-y-3">
+            <div className="mt-8 flex flex-col space-y-3">
               <Button variant="outline" className="w-full py-2.5">
                 Editar Perfil
               </Button>
@@ -56,7 +56,7 @@ function ProfilePage() {
             </div>
 
             <p className="mt-6 text-center">
-              <Link to="/" className="text-ui-primary hover:underline font-medium">
+              <Link to="/reports/view" className="text-ui-primary hover:underline font-medium">
                 ← Volver al inicio
               </Link>
             </p>

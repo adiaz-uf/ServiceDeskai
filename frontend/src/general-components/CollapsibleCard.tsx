@@ -19,7 +19,7 @@ export function CollapsibleCard({ title, children, defaultOpen = false, classNam
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-3 flex items-center justify-between text-left font-semibold text-ui-primary"
       >
-        <span>{title}</span>
+        <span className="text-lg">{title}</span>
         <IoChevronDown className={`text-xl transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
       {isOpen && (
