@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { registerUser } from '../services/registerService';
+import { loginUser } from '../services/loginService';
 
 export const registerController = async (req: Request, res: Response): Promise<void> => {
-    const { email, password, username, name } = req.body;
+    const { email, password, username, name, userRole } = req.body;
 
     try {
-        const user = await registerUser({ email, password, username, name });
+        const user = await registerUser({ email, password, username, name, userRole });
 
         res.status(201).json({
             message: 'User registered successfully.',
@@ -17,19 +18,37 @@ export const registerController = async (req: Request, res: Response): Promise<v
         
         if (err.message?.includes('User already exists')) {
             res.status(409).json({
-                    message: err.message
-                });
+                message: err.message
+            });
             return;
         } else if (err.status === 400) {
             res.status(400).json({
-                    message: err.message
-                });
+                message: err.message
+            });
             return;
         }
 
         console.error('Registration Failed: ', error);
         res.status(500).json({
             message: 'Server error during registration. Please try again later.'
+        });
+    }
+}
+
+export const loginController = async (req: Request, res: Response): Promise<void> => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await loginUser({email, password});
+
+        res.status(201).json({
+            message: 'User logged in successfully.',
+            user: user
+        });
+    } catch (error: unknown) {
+        console.error('Login Failed: ', error);
+        res.status(500).json({
+            message: 'Server error during login. Please try again later.'
         });
     }
 }

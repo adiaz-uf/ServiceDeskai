@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registerController } 
+import { registerController, loginController } 
 from '../controllers/authController';
 
 import { validateRegisterCredentials, validateLoginCredentials } from '../middleware/validateCredentials';
@@ -10,7 +10,7 @@ const router = Router();
 router.post('/register', validateRegisterCredentials, registerController);
 
 // POST /api/v1/auth/login
-//router.post('/login', validateLoginCredentials, loginController);
+router.post('/login', validateLoginCredentials, loginController);
 
 // POST /api/v1/auth/logout
 //router.post('/logout', logoutController);

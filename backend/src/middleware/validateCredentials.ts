@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 export const validateRegisterCredentials = 
 (req: Request, res: Response, next: NextFunction) => {
-    const { email, password, confirmPassword, username, name } = req.body;
+    const { email, password, confirmPassword, username, name, userRole } = req.body;
 
     if (!email) {
         return res.status(400).json({
@@ -52,13 +52,19 @@ export const validateRegisterCredentials =
         });
     }
 
+    if (userRole && (userRole !== 'user' || userRole !== 'service_desk' || userRole !== 'admin')) {
+        return res.status(400).json({
+            message: 'Validation Error: Invalid user role.'
+        });
+    }
+
     return next();
 }
 
 
 export const validateLoginCredentials = 
 (req: Request, res: Response, next: NextFunction) => {
-    const { email, password, confirmPassword, username, name } = req.body;
+    const { email, password } = req.body;
 
     if (!email) {
         return res.status(400).json({

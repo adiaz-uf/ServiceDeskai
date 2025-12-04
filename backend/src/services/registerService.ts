@@ -3,9 +3,9 @@ import { UserModel, IUser } from '../models/User';
 
 const SALT_ROUNDS = 10;
 
-type RegisterUserData = Pick<IUser, 'email' | 'username' | 'name'> & { password: string };
+type RegisterUserData = Pick<IUser, 'email' | 'username' | 'name' | 'userRole'> & { password: string };
 
-export const registerUser = async ({ email, password, username, name }: RegisterUserData) => {
+export const registerUser = async ({ email, password, username, name, userRole = 'user' }: RegisterUserData) => {
     // Check if the user already exists
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
@@ -21,6 +21,7 @@ export const registerUser = async ({ email, password, username, name }: Register
         passwordHash,
         username,
         name,
+        userRole
     });
 
     // Save the user to the database
