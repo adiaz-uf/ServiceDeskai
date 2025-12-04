@@ -35,15 +35,6 @@ async function initializeCollections(): Promise<void> {
   if (!collectionNames.includes('users')) {
     await db.createCollection('users');
     console.log('Created collection: users');
-
-    // Insert admin user
-    await db.collection('users').insertOne({
-      createdAt: new Date(),
-      description: 'Admin user',
-      name: 'Administrator',
-      username: 'admin'
-    });
-    console.log('Inserted example user document');
   }
 
   // Create collection 'reports' if not exists

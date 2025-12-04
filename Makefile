@@ -12,6 +12,14 @@ fclean:
 
 re: fclean up
 
+re-backend:
+	docker compose stop backend
+	docker compose up -d --build backend
+
+re-frontend:
+	docker compose stop frontend
+	docker compose up -d --build frontend
+
 # Reset database
 db-reset:
 	docker compose stop mongodb

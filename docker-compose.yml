@@ -37,6 +37,10 @@ services:
       - NODE_ENV=${NODE_ENV}
       - BACKEND_PORT=${BACKEND_PORT}
       - MONGODB_URI=${MONGODB_URI}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_NAME=${ADMIN_NAME}
 
   # 3. MongoDB Database Service
   mongodb:
