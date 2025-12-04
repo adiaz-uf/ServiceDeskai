@@ -1,4 +1,4 @@
-import { MongoClient, Db, CollectionInfo } from 'mongodb';
+import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -7,31 +7,17 @@ if (!MONGODB_URI) {
   process.exit(1);
 }
 
-let client: MongoClient;
-let db: Db;
-
-export async function connectDB(): Promise<Db> {
-  if (db) return db;
-
+export async function connectDB(): Promise<typeof mongoose> {
   try {
-    client = new MongoClient(MONGODB_URI as string);
-    await client.connect();
+    await mongoose.connect(MONGODB_URI as string);
     
-    // Extract db name from URI
-    const dbName = new URL(MONGODB_URI as string).pathname.slice(1).split('?')[0];
-
-    if (!dbName) {
-      throw new Error('Database name could not be determined from MONGODB_URI.');
-    }   
-
-    db = client.db(dbName);
-    
+    const dbName = mongoose.connection.db?.databaseName;
     console.log(`Connected to MongoDB database: ${dbName}`);
 
     // Initialize collections if they do not exist
     await initializeCollections();
     
-    return db;
+    return mongoose;
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
     process.exit(1);
@@ -39,8 +25,11 @@ export async function connectDB(): Promise<Db> {
 }
 
 async function initializeCollections(): Promise<void> {
+  const db = mongoose.connection.db;
+  if (!db) return;
+
   const collections = await db.listCollections().toArray();
-  const collectionNames = collections.map((c: CollectionInfo) => c.name);
+  const collectionNames = collections.map((c: { name: string }) => c.name);
 
   // Create collection 'users' if not exists
   if (!collectionNames.includes('users')) {
@@ -65,15 +54,6 @@ async function initializeCollections(): Promise<void> {
 }
 
 export async function disconnectDB(): Promise<void> {
-  if (client) {
-    await client.close();
-    console.log('Disconnected from MongoDB');
-  }
-}
-
-export function getDB(): Db {
-  if (!db) {
-    throw new Error('Database not initialized. Call connectDB() first.');
-  }
-  return db;
+  await mongoose.disconnect();
+  console.log('Disconnected from MongoDB');
 }

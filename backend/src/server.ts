@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
 
-import { TravelRecommendation, FrontendRequest } from './types';
-import { connectDB } from './db';
+import {connectDB} from './config/db';
+import router from './routes';
 
 const app: Express = express();
 const PORT: number = Number(process.env.BACKEND_PORT);
@@ -11,15 +12,21 @@ if (!PORT) {
     process.exit(1);
 }
 
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, World!');
 });
+
+app.use('/api/v1', router);
 
 // Connect database
 connectDB().then(() => {
 
   // start server
-  app.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 }).catch((error) => {
