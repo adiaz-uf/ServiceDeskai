@@ -6,10 +6,16 @@ const SALT_ROUNDS = 10;
 type RegisterUserData = Pick<IUser, 'email' | 'username' | 'name' | 'userRole'> & { password: string };
 
 export const registerUser = async ({ email, password, username, name, userRole = 'user' }: RegisterUserData) => {
-    // Check if the user already exists
-    const existingUser = await UserModel.findOne({ email });
-    if (existingUser) {
-        throw new Error('User already exists');
+    // Check if the email already exists
+    const existingEmail = await UserModel.findOne({ email });
+    if (existingEmail) {
+        throw new Error('Este email ya existe');
+    }
+
+    // Check if the username already exists
+    const existingUsername = await UserModel.findOne({ username });
+    if (existingUsername) {
+        throw new Error('Este nombre de usuario ya existe');
     }
 
     // Hash the password

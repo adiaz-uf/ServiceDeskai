@@ -49,7 +49,9 @@ app.listen(PORT, async () => {
       });
       console.log('Admin user created successfully:', user.email);
     } catch (error) {
-      if (error instanceof Error && error.message === 'User already exists') {
+      if (error instanceof Error && (error.message === 'Este email ya existe' || 
+         error.message === 'Este nombre de usuario ya existe')) 
+      {
         console.log('Admin user already exists, skipping creation.');
       } else {
         console.error('Error creating admin user:', error);

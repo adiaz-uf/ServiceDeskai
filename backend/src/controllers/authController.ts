@@ -16,7 +16,7 @@ export const registerController = async (req: Request, res: Response): Promise<v
     } catch (error: unknown) {
         const err = error as Error & { status?: number };
         
-        if (err.message?.includes('User already exists')) {
+        if (err.message?.includes('ya existe')) {
             res.status(409).json({
                 message: err.message
             });
@@ -41,12 +41,21 @@ export const loginController = async (req: Request, res: Response): Promise<void
     try {
         const user = await loginUser({email, password});
 
-        res.status(201).json({
+        res.status(200).json({
             message: 'User logged in successfully.',
             user: user
         });
     } catch (error: unknown) {
-        console.error('Login Failed: ', error);
+        const err = error as Error;
+        
+        if (err.message === 'El email o la contraseña no son válidos') {
+            res.status(401).json({
+                message: err.message
+            });
+            return;
+        }
+
+        console.error('Login Failed:', error);
         res.status(500).json({
             message: 'Server error during login. Please try again later.'
         });

@@ -9,6 +9,7 @@ export interface IUser extends Document {
     name: string;
     userRole: 'admin' | 'user' | 'service_desk';
     office: Types.ObjectId;
+    refreshToken: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -46,6 +47,9 @@ const userSchema = new Schema<IUser>({
     office: {
         type: Schema.Types.ObjectId,
         ref: 'Office',
+    },
+    refreshToken: {
+        type: String,
     }
 }, {
     timestamps: true // Adds createdAt and updatedAt fields automatically

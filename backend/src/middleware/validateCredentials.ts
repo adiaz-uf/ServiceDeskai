@@ -1,95 +1,42 @@
 import { Request, Response, NextFunction } from "express";
+import { ZodError } from "zod";
+import { registerSchema, loginSchema } from "../schemas/authSchemas";
 
 export const validateRegisterCredentials = 
 (req: Request, res: Response, next: NextFunction) => {
-    const { email, password, confirmPassword, username, name, userRole } = req.body;
-
-    if (!email) {
-        return res.status(400).json({
-            message: 'Validation Error: Email is required.'
-        })
-    }
-
-    if (!password) {
-        return res.status(400).json({
-            message: 'Validation Error: Password is required.'
-        })
-    }
-
-    if (!confirmPassword) {
-        return res.status(400).json({
-            message: 'Validation Error: Confirm Password is required.'
-        })
-    }
-
-    if (!username) {
-        return res.status(400).json({
-            message: 'Validation Error: Username is required.'
-        })
-    }
-
-    if (!name) {
-        return res.status(400).json({
-            message: 'Validation Error: Name is required.'
-        })
-    }
-
-    if (!email.includes('@') || email.length < 5) {
-        return res.status(400).json({
-            message: 'Validation Error: Invalid email format.'
+    try {
+        registerSchema.parse(req.body);
+        return next();
+    } catch (error) {
+        if (error instanceof ZodError) {
+            const errorMessages = error.errors.map(err => err.message);
+            return res.status(400).json({
+                message: errorMessages[0],
+                errors: errorMessages
+            });
+        }
+        return res.status(500).json({
+            message: 'Error de validación.'
         });
     }
-
-    if (password !== confirmPassword) {
-        return res.status(400).json({
-            message: 'Validation Error: Passwords must be the same.'
-        });
-    }
-
-    if (password.length < 6) {
-        return res.status(400).json({
-            message: 'Validation Error: Password must be at least 6 characters long.'
-        });
-    }
-
-    if (userRole && (userRole !== 'user' || userRole !== 'service_desk' || userRole !== 'admin')) {
-        return res.status(400).json({
-            message: 'Validation Error: Invalid user role.'
-        });
-    }
-
-    return next();
 }
-
 
 export const validateLoginCredentials = 
 (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
-
-    if (!email) {
-        return res.status(400).json({
-            message: 'Validation Error: Email is required.'
-        })
-    }
-
-    if (!password) {
-        return res.status(400).json({
-            message: 'Validation Error: Password is required.'
-        })
-    }
-
-    if (!email.includes('@') || email.length < 5) {
-        return res.status(400).json({
-            message: 'Validation Error: Invalid email format.'
+    try {
+        loginSchema.parse(req.body);
+        return next();
+    } catch (error) {
+        if (error instanceof ZodError) {
+            const errorMessages = error.errors.map(err => err.message);
+            return res.status(400).json({
+                message: errorMessages[0],
+                errors: errorMessages
+            });
+        }
+        return res.status(500).json({
+            message: 'Error de validación.'
         });
     }
-
-    if (password.length < 6) {
-        return res.status(400).json({
-            message: 'Validation Error: Password must be at least 6 characters long.'
-        });
-    }
-
-    return next();
 }
 
