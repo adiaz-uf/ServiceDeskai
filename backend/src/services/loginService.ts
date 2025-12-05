@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { UserModel, IUser } from '../models/User';
-import { log } from 'console';
 
 type LoginUserData = Pick<IUser, 'email'> & { password: string };
 
@@ -25,9 +24,7 @@ export const loginUser = async ({ email, password }: LoginUserData) => {
         email: existingUser.email,
         username: existingUser.username,
         name: existingUser.name,
-        userRole: existingUser.userRole,
-        createdAt: existingUser.createdAt,
-        updatedAt: existingUser.updatedAt,
+        userRole: existingUser.userRole
     };
 
     const jwtSecret = process.env.JWT_SECRET;
