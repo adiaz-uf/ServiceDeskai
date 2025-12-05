@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { initializeDatabase } from './init-db';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -14,33 +15,13 @@ export async function connectDB(): Promise<typeof mongoose> {
     const dbName = mongoose.connection.db?.databaseName;
     console.log(`Connected to MongoDB database: ${dbName}`);
 
-    // Initialize collections if they do not exist
-    await initializeCollections();
+    // Create collections and insert initial data
+    await initializeDatabase();
     
     return mongoose;
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
     process.exit(1);
-  }
-}
-
-async function initializeCollections(): Promise<void> {
-  const db = mongoose.connection.db;
-  if (!db) return;
-
-  const collections = await db.listCollections().toArray();
-  const collectionNames = collections.map((c: { name: string }) => c.name);
-
-  // Create collection 'users' if not exists
-  if (!collectionNames.includes('users')) {
-    await db.createCollection('users');
-    console.log('Created collection: users');
-  }
-
-  // Create collection 'reports' if not exists
-  if (!collectionNames.includes('reports')) {
-    await db.createCollection('reports');
-    console.log('Created collection: reports');
   }
 }
 
