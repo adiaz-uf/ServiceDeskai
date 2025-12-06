@@ -49,7 +49,7 @@ export function Select({ options, value, onChange, placeholder = "Seleccionar", 
       </button>
       
       {isOpen && (
-        <div className="fixed left-0 right-0 z-10 mx-8 mt-1 bg-ui-background border border-ui-primary rounded-md shadow-lg overflow-hidden">
+        <div className="fixed left-0 right-0 z-10 mx-8 mt-1 bg-ui-background border border-ui-primary rounded-md shadow-lg overflow-y-auto max-h-80">
           {options.map((option) => (
             <button
               key={option.value}

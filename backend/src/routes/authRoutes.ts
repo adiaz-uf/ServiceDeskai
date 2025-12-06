@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { registerController, loginController } 
+import { registerController, loginController, logoutController } 
 from '../controllers/authController';
 
 import { validateRegisterCredentials, validateLoginCredentials } from '../middleware/validateCredentials';
+import { authenticateJWT } from '../middleware/authMiddleware';
 
 const router = Router();
 
@@ -13,6 +14,6 @@ router.post('/register', validateRegisterCredentials, registerController);
 router.post('/login', validateLoginCredentials, loginController);
 
 // POST /api/v1/auth/logout
-//router.post('/logout', logoutController);
+router.post('/logout', authenticateJWT, logoutController);
 
 export default router;

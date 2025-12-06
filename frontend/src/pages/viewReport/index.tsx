@@ -1,19 +1,37 @@
+import { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import { CardContent } from "../../general-components/Card";
 import { Select } from "../../general-components/Select";
 import { CollapsibleCard } from "../../general-components/CollapsibleCard";
-
-const filterOptions = [
-  { value: "all", label: "Todas las oficinas"},
-  { value: "madrid1", label: "n.1 - Madrid, Calle Cristóbal Bordiú 13"},
-  { value: "madrid2", label: "n.2 - Madrid, Plaza Ruiz Picasso 11 Piso 7"},
-  { value: "barcelona1", label: "n.3 - Barcelona, Carrer d’Amigó 11"},
-  { value: "valencia1", label: "n.4 - Logroño, Calle Fausto Elhuyar 5-7"},
-  { value: "valencia2", label: "n.5 - Málaga, Calle Compositor Lehmberg Ruiz 21 Planta 2"},
-  { value: "valencia3", label: "n.6 - Málaga, Paseo del Muelle Uno"},
-];
+import { officeService, Office } from "../../services/office_service";
 
 export default function ViewReportsPage() {
+  const [filterOptions, setFilterOptions] = useState<{ value: string; label: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOffices = async () => {
+      try {
+        const offices = await officeService.getAllOffices();
+        const options = [
+          { value: "all", label: "Todas las oficinas" },
+          ...offices.map((office: Office) => ({
+            value: office._id,
+            label: `n.${office.number} - ${office.city}, ${office.direction}`
+          }))
+        ];
+        setFilterOptions(options);
+      } catch (error) {
+        console.error('Error fetching offices:', error);
+        setFilterOptions([{ value: "all", label: "Todas las oficinas" }]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOffices();
+  }, []);
+
   return (
     <div>
         <MainLayout>
@@ -22,7 +40,7 @@ export default function ViewReportsPage() {
               <h2 className="text-ui-primary font font-semibold text-2xl whitespace-nowrap">Mis Reportes</h2>
               <Select 
                 options={filterOptions} 
-                placeholder="Todas las oficinas"
+                placeholder={loading ? "Cargando..." : "Todas las oficinas"}
                 onChange={(value) => console.log(value)}
               />
             </div>

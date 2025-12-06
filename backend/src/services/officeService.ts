@@ -27,7 +27,7 @@ export const createOffice = async ({ city, country, direction }: OfficeData) => 
     // Save the Office to the database
     const savedOffice = await newOffice.save();
 
-    // Return office without
+    // Return office
     return {
         _id: savedOffice._id,
         number: savedOffice.number,

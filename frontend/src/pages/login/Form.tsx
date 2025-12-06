@@ -1,16 +1,21 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { Button } from '../../general-components/Button';
 import { Card, CardContent } from '../../general-components/Card';
 import { authService } from '../../services/auth_service';
 import { MessageBox } from '../../general-components/MessageBox';
+import { loginSuccess } from '../../store/authSlice';
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState({ text: '', type: '' as 'error' | 'success', show: false });
+
+  const dispatch = useDispatch();
 
   const showMessage = (text: string, type: 'error' | 'success') => {
     setMessage({ text, type, show: true });
@@ -22,7 +27,18 @@ export default function LoginForm() {
     try {
       const loggeduser = await authService.loginUser({email, password});
       
-      window.localStorage.setItem('userAccessToken', loggeduser.user.accesstoken)
+      // Save user data in store & localStorage
+      dispatch(loginSuccess({
+        accessToken: loggeduser.user.accesstoken,
+        user: {
+          _id: loggeduser.user._id,
+          email: loggeduser.user.email,
+          username: loggeduser.user.username,
+          name: loggeduser.user.name,
+          userRole: loggeduser.user.userRole
+        }
+      }));
+
       navigate('/reports/view');
       
     } catch (error) {

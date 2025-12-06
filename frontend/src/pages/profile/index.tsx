@@ -1,19 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Button } from '../../general-components/Button';
 import { Card, CardContent } from '../../general-components/Card';
 import MainLayout from '../../layouts/MainLayout';
+import { RootState } from '../../store/store';
 
 function ProfilePage() {
-  // TODO: Obtener datos del usuario desde el estado global o API
-  const user = {
-    name: 'Usuario Demo',
-    email: 'demo@example.com',
-    createdAt: new Date().toLocaleDateString()
-  };
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleLogout = () => {
-    // TODO: Implementar lógica de logout
-    console.log('Logout');
+    navigate('/logout');
   };
 
   return (
@@ -21,45 +18,36 @@ function ProfilePage() {
       <div className="flex items-center justify-center bg-ui-secondary">
         <Card className="w-full max-w-md">
           <CardContent className="p-8">
-            <div className="flex flex-col items-center mb-6">
+            <div className="flex flex-col gap-2 items-center mb-6">
               <div className="w-24 h-24 bg-ui-primary rounded-full flex items-center justify-center mb-4">
                 <span className="text-3xl text-white font-bold">
-                  {user.name.charAt(0).toUpperCase()}
+                  {user?.name?.charAt(0).toUpperCase() || 'U'}
                 </span>
               </div>
-              <h1 className="text-2xl font-bold text-ui-primary">
-                {user.name}
+              <h1 className="text-3xl text-center font-bold text-ui-primary">
+                {user?.name || 'Usuario'}
               </h1>
-              <p className="text-text-secondary">{user.email}</p>
+              <p className="text-text-secondary text-lg">{user?.email}</p>
+              <p className="text-text-secondary text-lg">@{user?.username}</p>
             </div>
 
             <div className="space-y-4 border-t border-gray-200 pt-6">
-              <div className="flex justify-between items-center">
-                <span className="text-text-secondary">Miembro desde</span>
-                <span className="text-text-primary font-medium">{user.createdAt}</span>
+              <div className="flex justify-around items-center">
+                <span className="text-text-primary text-2xl">Rol:</span>
+                <span className="text-text-secondary font-medium text-2xl">{user?.userRole}</span>
               </div>
             </div>
 
             <div className="mt-8 flex flex-col space-y-3">
-              <Button variant="outline" className="w-full py-2.5">
-                Editar Perfil
+              <Button 
+                variant="default" 
+                className="w-full py-2.5 bg-status-error hover:bg-red-700"
+                onClick={handleLogout}
+              >
+                Cerrar Sesión
               </Button>
-              <Link to="/login">
-                <Button 
-                  variant="default" 
-                  className="w-full py-2.5 bg-status-error hover:bg-red-700"
-                  onClick={handleLogout}
-                >
-                  Cerrar Sesión
-                </Button>
-              </Link>
             </div>
 
-            <p className="mt-6 text-center">
-              <Link to="/reports/view" className="text-ui-primary hover:underline font-medium">
-                ← Volver al inicio
-              </Link>
-            </p>
           </CardContent>
         </Card>
       </div>

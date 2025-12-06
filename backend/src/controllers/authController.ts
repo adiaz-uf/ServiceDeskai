@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { registerUser } from '../services/registerService';
 import { loginUser } from '../services/loginService';
+import { logoutUser } from '../services/logoutService';
+import { AuthenticatedRequest } from '../middleware/authMiddleware';
 
 export const registerController = async (req: Request, res: Response): Promise<void> => {
     const { email, password, username, name, userRole } = req.body;
@@ -58,6 +60,39 @@ export const loginController = async (req: Request, res: Response): Promise<void
         console.error('Login Failed:', error);
         res.status(500).json({
             message: 'Server error during login. Please try again later.'
+        });
+    }
+}
+
+export const logoutController = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+        const userId = req.user?._id;
+
+        if (!userId) {
+            res.status(401).json({
+                message: 'Usuario no autenticado'
+            });
+            return;
+        }
+
+        await logoutUser(userId);
+
+        res.status(200).json({
+            message: 'Logout exitoso'
+        });
+    } catch (error: unknown) {
+        const err = error as Error;
+
+        if (err.message === 'Usuario no encontrado') {
+            res.status(404).json({
+                message: err.message
+            });
+            return;
+        }
+
+        console.error('Logout Failed:', error);
+        res.status(500).json({
+            message: 'Server error during logout. Please try again later.'
         });
     }
 }

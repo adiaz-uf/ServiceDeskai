@@ -25,7 +25,7 @@ export const MessageBox: React.FC<MessageBoxProps> = ({ type, message, show }) =
   return (
     <div
       className={cn(
-        "px-4 py-3 rounded-xl text-sm border max-w-xs w-fit shadow-md transition-all duration-300 transform break-words",
+        "px-4 py-3 rounded-xl text-md border max-w-xs w-fit shadow-md transition-all duration-300 transform break-words",
         type === "error" && "bg-red-100 border-status-error text-status-error",
         type === "success" && "bg-green-100 border-status-success text-status-success",
         type === "app" && "bg-blue-100 border-ui-primary text-ui-primary",
