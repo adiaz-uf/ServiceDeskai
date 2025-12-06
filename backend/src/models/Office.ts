@@ -36,6 +36,7 @@ const officeSchema = new Schema<IOffice>({
         type: String,
         required: true,
         trim: true,
+        unique: true,
     }
 }, {
     timestamps: true
