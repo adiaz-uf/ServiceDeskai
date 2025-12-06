@@ -28,6 +28,7 @@ services:
       - mongodb
     volumes:
       - ./backend:/usr/src/app
+      - ./${UPLOADS_FOLDER}:/${UPLOADS_FOLDER}
     env_file:
       - .env
 

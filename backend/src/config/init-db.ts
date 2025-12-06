@@ -9,7 +9,7 @@ const initialOffices = [
     { number: 3, city: 'Barcelona', country: 'España', direction: "Carrer d'Amigó 11" },
     { number: 4, city: 'Logroño', country: 'España', direction: 'Calle Fausto Elhuyar 5-7' },
     { number: 5, city: 'Málaga', country: 'España', direction: 'Calle Compositor Lehmberg Ruiz 21 Planta 2' },
-    { number: 6, city: 'Málaga', country: 'España', direction: 'Paseo del Muelle Uno' },
+    { number: 6, city: 'Málaga', country: 'España', direction: 'Paseo del Muelle 1' },
 ];
 
 async function initializeCollections(): Promise<void> {

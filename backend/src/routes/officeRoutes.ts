@@ -1,4 +1,3 @@
-// src/routes/adminRouter.ts
 import { Router } from 'express';
 import { authenticateJWT, authorizeRoles } from '../middleware/authMiddleware';
 import { getAllOfficesController, createOfficeController } from '../controllers/officeController';

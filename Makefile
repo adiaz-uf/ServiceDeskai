@@ -1,6 +1,11 @@
 .PHONY: all up down clean rebuild logs ps
 
+# Load .env file
+include .env
+export
+
 up:
+	@mkdir -p $(UPLOADS_FOLDER)
 	docker compose up -d --build
 
 down:

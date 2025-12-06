@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
+import path from 'path';
 
 import { connectDB } from './config/db';
 import router from './routes';
@@ -15,6 +16,10 @@ if (!PORT) {
 // Middlewares
 app.use(cors());
 app.use(express.json());
+
+// Serve uploads files
+const uploadsPath = '/' + (process.env.UPLOADS_FOLDER || 'mongodb/uploads');
+app.use('/uploads', express.static(uploadsPath));
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, World!');

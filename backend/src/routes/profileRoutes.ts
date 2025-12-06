@@ -1,4 +1,3 @@
-// src/routes/profileRouter.ts
 import { Router } from 'express';
 import { getProfileController, updateProfileController, uploadProfilePhotoController } 
 from '../controllers/profileController';
