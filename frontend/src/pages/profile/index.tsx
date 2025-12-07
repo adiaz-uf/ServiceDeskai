@@ -1,13 +1,18 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { FaUserPlus } from "react-icons/fa6";
+
 import { Button } from '../../general-components/Button';
 import { Card, CardContent } from '../../general-components/Card';
 import MainLayout from '../../layouts/MainLayout';
 import { RootState } from '../../store/store';
+import CreateUserModal from './CreateUserModal';
 
 function ProfilePage() {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [showCreateUser, setShowCreateUser] = useState(false);
 
   const handleLogout = () => {
     navigate('/logout');
@@ -15,7 +20,7 @@ function ProfilePage() {
 
   return (
     <MainLayout>
-      <div className="flex items-center justify-center bg-ui-secondary">
+      <div className="flex flex-col items-center justify-center">
         <Card className="w-full max-w-md">
           <CardContent className="p-8">
             <div className="flex flex-col gap-2 items-center mb-6">
@@ -51,6 +56,28 @@ function ProfilePage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Create user button & modal (only admin) */}
+      {
+        user.userRole === 'admin' &&
+        (
+          <>
+            <div className="fixed bottom-28 right-4 z-50">
+              <Button 
+                className='text-4xl !rounded-full !p-4'
+                onClick={() => setShowCreateUser(true)}
+              >
+                <FaUserPlus />
+              </Button>
+            </div>
+      
+            <CreateUserModal
+              isOpen={showCreateUser} 
+              onClose={() => setShowCreateUser(false)}
+            />
+          </>
+        )
+      }
     </MainLayout>
   );
 }

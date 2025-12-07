@@ -76,6 +76,7 @@ export default function ViewReportsPage() {
                 options={filterOptions} 
                 placeholder={loading ? "Cargando..." : "Todas las oficinas"}
                 onChange={(value) => setSelectedOffice(value)}
+                highlightWord="madrid" // TODO: geolocate city
               />
             </div>
 
