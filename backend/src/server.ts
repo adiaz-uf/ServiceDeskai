@@ -21,10 +21,6 @@ app.use(express.json());
 const uploadsPath = '/' + (process.env.UPLOADS_FOLDER || 'mongodb/uploads');
 app.use('/uploads', express.static(uploadsPath));
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, World!');
-});
-
 app.use('/api/v1', router);
 
 // Connect database and start server

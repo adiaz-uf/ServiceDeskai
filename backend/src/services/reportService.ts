@@ -1,5 +1,8 @@
 import { ReportModel, IReport } from '../models/Report';
 import { Types } from 'mongoose';
+import { sendReportShareEmail } from './emailService';
+import { OfficeModel } from '../models/Office';
+import { UserModel } from '../models/User';
 
 interface CreateReportData {
     description: string;
@@ -13,9 +16,6 @@ interface UpdateStatusData {
     status: 'open' | 'assigned' | 'in-progress' | 'closed';
 }
 
-/**
- * Crear un nuevo reporte
- */
 export const createReport = async (data: CreateReportData): Promise<IReport> => {
     const report = new ReportModel({
         description: data.description,
@@ -26,12 +26,31 @@ export const createReport = async (data: CreateReportData): Promise<IReport> => 
         status: 'open'
     });
 
-    return await report.save();
+    const savedReport = await report.save();
+
+    // Send email
+    if (data.sharedWith) {
+        try {
+            const office = await OfficeModel.findById(data.office);
+            const user = await UserModel.findById(data.user);
+            
+            await sendReportShareEmail({
+                to: data.sharedWith,
+                reportId: savedReport._id.toString(),
+                reporterName: user?.name || 'Usuario',
+                officeName: office ? `${office.city} - ${office.direction}` : 'Oficina',
+                description: data.description,
+                imagePath: data.image_url
+            });
+        } catch (emailError) {
+            console.error('Error sending share email:', emailError);
+            // dont block report creation
+        }
+    }
+
+    return savedReport;
 };
 
-/**
- * Obtener historial de reportes (filtrado por usuario o todos para admin/service_desk)
- */
 export const getReportHistory = async (
     userId: string, 
     userRole: string
@@ -46,18 +65,12 @@ export const getReportHistory = async (
         .sort({ createdAt: -1 });
 };
 
-/**
- * Obtener detalles de un reporte por ID
- */
 export const getReportById = async (reportId: string): Promise<IReport | null> => {
     return await ReportModel.findById(reportId)
         .populate('office', 'number city country direction')
         .populate('user', 'name email username');
 };
 
-/**
- * Actualizar estado de un reporte
- */
 export const updateReportStatus = async (
     reportId: string, 
     data: UpdateStatusData
@@ -69,9 +82,7 @@ export const updateReportStatus = async (
     );
 };
 
-/**
- * Compartir reporte (actualizar email de compartido)
- */
+
 export const shareReport = async (
     reportId: string, 
     email: string
@@ -83,9 +94,6 @@ export const shareReport = async (
     );
 };
 
-/**
- * Verificar si un usuario tiene acceso a un reporte
- */
 export const userHasAccessToReport = async (
     reportId: string,
     userId: string,
