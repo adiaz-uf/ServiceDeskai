@@ -9,6 +9,12 @@ export interface Office {
     direction: string;
 }
 
+export interface CreateOfficeData {
+    city: string;
+    country: string;
+    direction: string;
+}
+
 const getAllOffices = async (): Promise<Office[]> => {
     try {
         const response = await fetch(`${API_BASE_URL}/offices`, {
@@ -29,6 +35,28 @@ const getAllOffices = async (): Promise<Office[]> => {
     }
 };
 
+const createOffice = async (data: CreateOfficeData): Promise<Office> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/offices`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Error al crear oficina');
+        }
+
+        return result.office;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
 export const officeService = {
-    getAllOffices
+    getAllOffices,
+    createOffice
 };

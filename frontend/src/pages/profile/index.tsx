@@ -2,17 +2,20 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaUserPlus } from "react-icons/fa6";
+import { LuHousePlus } from "react-icons/lu";
 
 import { Button } from '../../general-components/Button';
 import { Card, CardContent } from '../../general-components/Card';
 import MainLayout from '../../layouts/MainLayout';
 import { RootState } from '../../store/store';
 import CreateUserModal from './CreateUserModal';
+import CreateOfficeModal from './CreateOfficeModal';
 
 function ProfilePage() {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
   const [showCreateUser, setShowCreateUser] = useState(false);
+  const [showCreateOffice, setShowCreateOffice] = useState(false);
 
   const handleLogout = () => {
     navigate('/logout');
@@ -74,6 +77,20 @@ function ProfilePage() {
             <CreateUserModal
               isOpen={showCreateUser} 
               onClose={() => setShowCreateUser(false)}
+            />
+
+            <div className="fixed bottom-48 right-4 z-50">
+              <Button 
+                className='text-4xl !rounded-full !p-4'
+                onClick={() => setShowCreateOffice(true)}
+              >
+                <LuHousePlus />
+              </Button>
+            </div>
+      
+            <CreateOfficeModal
+              isOpen={showCreateOffice} 
+              onClose={() => setShowCreateOffice(false)}
             />
           </>
         )

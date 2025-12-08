@@ -155,6 +155,7 @@ export default function UploadPage() {
           )}
           </CardContent>
         </Card>
+        
         <Card className="mt-5">
           <CardContent>
             <div className="w-full bg-ui-secondary rounded-md flex flex-col text-start justify-center">

@@ -67,6 +67,7 @@ export default function InsertLocationModal({ isOpen, onClose, onSubmit }: Inser
 									value={selectedOfficeId}
 									onChange={(value) => setSelectedOfficeId(value)}
 									placeholder={loading ? "Cargando oficinas..." : "Selecciona una oficina"}
+									highlightWord="madrid" // TODO
 								/>
 							</div>
 							<div className="flex gap-6">
