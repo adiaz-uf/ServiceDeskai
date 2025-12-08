@@ -13,7 +13,6 @@ router.post('/', authenticateJWT, authorizeRoles(['admin']), createOfficeControl
 /** GET /api/v1/offices (Ver todas las oficinas) */
 router.get('/', authenticateJWT, getAllOfficesController);
 
-/** GET /api/v1/admin/reports/summary (Generar reportes del sistema) TODO? */
-//router.get('/reports/summary', authenticateJWT, authorizeRoles(['admin']), generateReportsController);
+
 
 export default router;

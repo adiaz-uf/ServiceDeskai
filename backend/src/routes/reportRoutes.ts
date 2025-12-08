@@ -3,9 +3,7 @@ import {
     createReportController, 
     getReportHistoryController, 
     getReportDetailsController, 
-    updateReportStatusController,
-    shareReportController,
-    analyzeImageController
+    updateReportStatusController
 } from '../controllers/reportController';
 import { authenticateJWT, authorizeRoles } from '../middleware/authMiddleware';
 import { validateNewReport, validateStatusUpdate, validateShareReport } from '../middleware/validationMiddleware';
@@ -23,9 +21,6 @@ router.get('/', authenticateJWT, getReportHistoryController); // Todos los roles
 
 /** GET /api/v1/reports/:id (Detalles del reporte) */
 router.get('/:id', authenticateJWT, getReportDetailsController); 
-
-/** POST /api/v1/reports/analyze (Endpoint interno para ML/AI) */
-router.post('/analyze', authenticateJWT, analyzeImageController); // Uso de AI/ML API [cite: 54, 55, 27]
 
 // Rutas de Service Desk y Administrador
 /** PUT/PATCH /api/v1/reports/:id/status (Actualizar estado: 'assigned', 'in-progress', 'closed') */

@@ -4,6 +4,8 @@ import { Card, CardContent } from "../../general-components/Card";
 import { Button } from "../../general-components/Button";
 import { Select } from "../../general-components/Select";
 import { officeService, Office } from "../../services/office_service";
+import { locationService } from "../../services/location_service";
+
 
 interface InsertLocationModalProps {
     isOpen: boolean;
@@ -15,6 +17,7 @@ export default function InsertLocationModal({ isOpen, onClose, onSubmit }: Inser
     const [selectedOfficeId, setSelectedOfficeId] = useState("");
     const [offices, setOffices] = useState<Office[]>([]);
     const [loading, setLoading] = useState(true);
+	const [nearOffice, setNearOffice] = useState('');
 
     useEffect(() => {
 			if (isOpen) {
@@ -28,7 +31,18 @@ export default function InsertLocationModal({ isOpen, onClose, onSubmit }: Inser
 						setLoading(false);
 					}
 				};
+
+				const getUserNearOffice = async () => {
+					try {
+						const userNearOffice = await locationService.getUserCity();
+						setNearOffice(userNearOffice);
+					} catch (error) {
+						console.error('Error setting near office:', error);
+					}
+				}
+
 				fetchOffices();
+				getUserNearOffice();
 			}
     }, [isOpen]);
 
@@ -67,7 +81,7 @@ export default function InsertLocationModal({ isOpen, onClose, onSubmit }: Inser
 									value={selectedOfficeId}
 									onChange={(value) => setSelectedOfficeId(value)}
 									placeholder={loading ? "Cargando oficinas..." : "Selecciona una oficina"}
-									highlightWord="madrid" // TODO
+									highlightWord={nearOffice}
 								/>
 							</div>
 							<div className="flex gap-6">

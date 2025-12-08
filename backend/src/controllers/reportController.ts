@@ -177,29 +177,3 @@ export const shareReportController = async (req: AuthenticatedRequest, res: Resp
         });
     }
 };
-
-/**
- * Analizar imagen con AI/ML
- * POST /api/v1/reports/analyze
- */
-export const analyzeImageController = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
-    const { image_url } = req.body;
-
-    try {
-        // TODO: Integrar con servicio de AI/ML para análisis de imagen
-        res.status(200).json({
-            message: 'Análisis completado',
-            analysis: {
-                // Placeholder para resultados de AI
-                category: 'pending',
-                confidence: 0,
-                suggestions: []
-            }
-        });
-    } catch (error: unknown) {
-        console.error('Analyze image failed: ', error);
-        res.status(500).json({
-            message: 'Error al analizar la imagen'
-        });
-    }
-};
