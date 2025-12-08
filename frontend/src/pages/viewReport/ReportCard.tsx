@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { FaEye } from "react-icons/fa";
+
+
 import { Button } from "../../general-components/Button";
 import { CardContent } from "../../general-components/Card";
 import { RootState } from '../../store/store';
@@ -74,7 +77,7 @@ export const ReportCard = ({ report, onStatusUpdate }: ReportCardProps) => {
 
   return (
     <>
-      <CardContent className="p-0 py-4 border-b border-ui-primary rounded-t-lg last:border-b-0">
+      <CardContent className="!p-0 !py-6 border-b border-ui-primary rounded-t-lg last:border-b-0">
         <div className="flex gap-3">
           <div 
             className="w-32 h-32 flex-shrink-0 rounded-md overflow-hidden bg-gray-200 bg-cover bg-center"
@@ -82,8 +85,8 @@ export const ReportCard = ({ report, onStatusUpdate }: ReportCardProps) => {
               backgroundImage: `url(${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_BACKEND_PORT}/uploads/${report.image_url})` 
             }}
           />
-          <div className="flex-1 flex flex-col min-w-0">
-            <div className="flex items-center gap-2 mb-1">
+          <div className="flex-1 flex flex-col min-w-0 gap-1">
+            <div className="flex items-center gap-2">
               <span className={`px-2 py-0.5 rounded-lg text-sm font-medium text-center ${getStatusColor(report.status)}`}>
                 {getStatusLabel(report.status)}
               </span>
@@ -94,15 +97,16 @@ export const ReportCard = ({ report, onStatusUpdate }: ReportCardProps) => {
             <p className="text-md text-gray-700 truncate">
               {report.description || 'Sin descripción'}
             </p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500">
               {report.office?.city} - {report.office?.direction}
             </p>
             {user?.userRole !== 'user' && (
               <Button 
-                className="ml-auto mt-auto"
+                variant="outline"
+                className="ml-auto text-2xl mt-auto"
                 onClick={() => setIsModalOpen(true)}
               >
-                Ver detalles
+                <FaEye />
               </Button>
             )}
           </div>

@@ -29,9 +29,6 @@ router.post('/analyze', authenticateJWT, analyzeImageController); // Uso de AI/M
 
 // Rutas de Service Desk y Administrador
 /** PUT/PATCH /api/v1/reports/:id/status (Actualizar estado: 'assigned', 'in-progress', 'closed') */
-router.patch('/:id/status', authenticateJWT, authorizeRoles(['service_desk', 'admin']), validateStatusUpdate, updateReportStatusController); // Service Desk [cite: 60]
-
-/** POST /api/v1/reports/:id/share (Compartir reporte por email) */
-router.post('/:id/share', authenticateJWT, validateShareReport, shareReportController); // Todos los roles [cite: 75]
+router.patch('/:id/status', authenticateJWT, authorizeRoles(['service_desk', 'admin']), validateStatusUpdate, updateReportStatusController);
 
 export default router;
