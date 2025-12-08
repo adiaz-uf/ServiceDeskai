@@ -3,12 +3,12 @@ import { registerController, loginController, logoutController }
 from '../controllers/authController';
 
 import { validateRegisterCredentials, validateLoginCredentials } from '../middleware/validateCredentials';
-import { authenticateJWT } from '../middleware/authMiddleware';
+import { authenticateJWT, authorizeRoles } from '../middleware/authMiddleware';
 
 const router = Router();
 
 // POST /api/v1/auth/register
-router.post('/register', validateRegisterCredentials, registerController);
+router.post('/register', validateRegisterCredentials, authenticateJWT, authorizeRoles(['admin']), registerController);
 
 // POST /api/v1/auth/login
 router.post('/login', validateLoginCredentials, loginController);

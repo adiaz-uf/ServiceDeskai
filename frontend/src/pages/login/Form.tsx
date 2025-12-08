@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '../../general-components/Button';
@@ -93,13 +93,6 @@ export default function LoginForm() {
               Iniciar Sesión
             </Button>
           </form>
-
-          <p className="mt-6 text-center text-text-secondary">
-            ¿No tienes cuenta?{' '}
-            <Link to="/register" className="text-ui-primary hover:underline font-medium">
-              Regístrate
-            </Link>
-          </p>
         </CardContent>
       </Card>
     </>

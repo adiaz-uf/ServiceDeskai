@@ -3,6 +3,7 @@ import { Button } from '../../general-components/Button';
 import { Card, CardContent } from '../../general-components/Card';
 import { MessageBox } from '../../general-components/MessageBox';
 import { authService } from '../../services/auth_service';
+import { Select } from '../../general-components/Select';
 
 interface CreateUserModalProps {
 	isOpen: boolean;
@@ -10,11 +11,12 @@ interface CreateUserModalProps {
 }
 
 const initialFormData = {
-  name: '',
-  email: '',
-  username: '',
-  password: '',
-  confirmPassword: ''
+	name: '',
+	email: '',
+	username: '',
+	password: '',
+	confirmPassword: '',
+	userRole: 'user'
 };
 
 export default function RegisterForm({ isOpen, onClose }: CreateUserModalProps) {
@@ -27,6 +29,10 @@ export default function RegisterForm({ isOpen, onClose }: CreateUserModalProps) 
       [e.target.name]: e.target.value
     });
   };
+
+	const handleRoleChange = (value: string) => {
+		setFormData({ ...formData, userRole: value });
+	};
 
   const showMessage = (text: string, type: 'error' | 'success') => {
     setMessage({ text, type, show: true });
@@ -47,11 +53,20 @@ export default function RegisterForm({ isOpen, onClose }: CreateUserModalProps) 
       return;
     }
 
-    try {
-      await authService.registerUser(formData);
-      showMessage('Usuario registrado correctamente', 'success');
-      setTimeout(() => onClose(), 1500);
-    } catch (error) {
+		try {
+			const payload = {
+				name: formData.name,
+				email: formData.email,
+				username: formData.username,
+				password: formData.password,
+				confirmPassword: formData.confirmPassword,
+				userRole: (formData as any).userRole || 'user'
+			};
+
+			await authService.registerUser(payload);
+			showMessage('Usuario registrado correctamente', 'success');
+			setTimeout(() => onClose(), 1500);
+		} catch (error) {
       const err = error as Error;
       showMessage(err.message || 'Error al registrar usuario', 'error');
     }
@@ -116,6 +131,22 @@ export default function RegisterForm({ isOpen, onClose }: CreateUserModalProps) 
 								className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-ui-primary focus:border-transparent"
 								placeholder="nombre"
 								required
+							/>
+						</div>
+
+						<div>
+							<label htmlFor="rol" className="block text-sm font-medium text-text-secondary mb-1">
+								Rol del usuario
+							</label>
+							<Select
+								options={[
+									{ value: 'admin', label: 'Admin' },
+									{ value: 'service_desk', label: 'Service Desk' },
+									{ value: 'user', label: 'User' }
+								]}
+								value={formData.userRole}
+								onChange={handleRoleChange}
+								placeholder="Seleccionar rol"
 							/>
 						</div>
 

@@ -17,7 +17,7 @@ const router = Router();
 router.post('/', authenticateJWT, upload.single('image'), validateNewReport, createReportController);
 
 /** GET /api/v1/reports (Historial de reportes) */
-router.get('/', authenticateJWT, getReportHistoryController); // Todos los roles
+router.get('/', authenticateJWT, getReportHistoryController);
 
 /** GET /api/v1/reports/:id (Detalles del reporte) */
 router.get('/:id', authenticateJWT, getReportDetailsController); 

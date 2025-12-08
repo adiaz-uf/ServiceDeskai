@@ -6,9 +6,7 @@ const registerUser = async (userData: object) => {
 	try {
 		const response = await fetch(`${API_BASE_URL}/auth/register`, {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
+			headers: getAuthHeaders(),
 			body: JSON.stringify(userData)
 		});
 
