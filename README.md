@@ -1,128 +1,230 @@
-<!-- README generado automáticamente -->
-# ServiceDeskai
+# 🛠️ ServiceDesk AI
 
-**ServiceDeskai** es una aplicación de ticketing para reportes de incidencias en oficinas (subida de fotos, generación automática de descripción con Gemini, gestión por roles y seguimiento).
+<div align="center">
 
-**Stack principal**
-- Frontend: React + TypeScript + Vite
-- Backend: Node.js + Express + TypeScript
-- Base de datos: MongoDB (con `mongo-express` para GUI)
-- Contenedores: `docker compose` (configurado en `docker-compose.yml`)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
-**Estructura principal del repositorio**
-- `backend/` — servidor Express en TypeScript, rutas, modelos, lógica de reportes y subida de imágenes con `multer`.
-- `frontend/` — app React + Vite, interfaz para crear/visualizar reportes y gestionar estado según rol.
-- `mongodb/` — scripts de inicialización
-- `docker-compose.yml` — orquesta `frontend`, `backend`, `mongodb`, `mongo-express`.
-- `Makefile` — comandos de conveniencia para levantar/limpiar el stack.
+**Sistema inteligente de gestión de incidencias IT con análisis de imágenes impulsado por IA**
 
-**Características relevantes**
-- Creación de reportes con imagen y descripción opcional.
-- Si no se proporciona descripción, el backend intenta generar una con Gemini (API de Google) a partir de la imagen.
-- Roles: `user`, `service_desk`, `admin` (control de acceso en backend y controles UI en frontend).
-- Las imágenes se guardan en una carpeta local redireccionada a un volumen Docker (`UPLOADS_FOLDER`).
+</div>
 
-**Variables de entorno importantes (.env)**
-Los valores de ejemplo están en tu archivo `.env`. Los más relevantes:
-- `MONGODB_URI` — URI de conexión a MongoDB.
-- `BACKEND_URL` — URL base pública del backend (ej: `http://localhost`).
-- `BACKEND_PORT` — puerto del backend (ej: `9000`).
-- `VITE_BACKEND_PORT` / `VITE_API_URL` — configuración para el frontend.
-- `UPLOADS_FOLDER` — carpeta en host para almacenar imágenes (la usa `docker-compose` como volumen).
-- `GEMINI_API_KEY` — clave para la API de Gemini (necesaria si quieres la generación automática).
-- `JWT_SECRET`, `ACCESS_TOKEN_EXPIRATION`, `REFRESH_TOKEN_EXPIRATION` — auth.
+---
 
-Nota: si alguno de los valores anteriores (p.ej. `BACKEND_URL` o `BACKEND_PORT`) no está definido, algunas funciones (p.ej. generación de descripción desde imágenes) fallarán con errores claros.
+## ✨ Características Principales
 
-**Cómo lanzar el proyecto (usando `Makefile`)**
+| Feature | Descripción |
+|---------|-------------|
+| 🤖 **Análisis IA de Imágenes** | Integración con Google Gemini para analizar automáticamente fotos de incidencias y generar descripciones |
+| 🎫 **Gestión de Tickets** | Sistema completo de creación, seguimiento y resolución de reportes de incidencias |
+| 👥 **Sistema de Roles** | Control de acceso basado en roles: `admin`, `service_desk` y `user` |
+| 🏢 **Gestión de Oficinas** | Administración de múltiples sedes con geolocalización |
+| 📧 **Notificaciones Email** | Envío automático de emails al compartir reportes |
+| 📸 **Upload de Imágenes** | Subida y almacenamiento de evidencias fotográficas |
+| 🔐 **Autenticación JWT** | Sistema seguro de login con tokens de acceso y refresh |
 
-Requisitos en la máquina host:
-- `docker` y `docker compose` instalados
-- `make` (habitualmente disponible en Linux/macOS)
+---
 
-Comandos útiles (desde la raíz del repo):
+## 🏗️ Stack Tecnológico
 
-1) Levantar todo en background (crea la carpeta de uploads definida por `UPLOADS_FOLDER`):
+### Frontend
+- **React 18** con TypeScript
+- **Vite** como bundler
+- **TailwindCSS** para estilos
+- **Redux Toolkit** para gestión de estado
+- **React Router** para navegación
+- **Leaflet** para mapas interactivos
+
+### Backend  
+- **Node.js** con Express 5
+- **TypeScript** 
+- **MongoDB** con Mongoose ODM
+- **JWT** para autenticación
+- **Multer** para subida de archivos
+- **Zod** para validación de schemas
+- **Nodemailer** para emails
+- **Google Generative AI** (Gemini 2.5 Flash)
+
+### Infraestructura
+- **Docker** & **Docker Compose**
+- **Mongo Express** como GUI de base de datos
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```
+ServiceDeskai/
+├── 📂 backend/
+│   ├── src/
+│   │   ├── config/          # Configuración DB y Multer
+│   │   ├── controllers/     # Controladores de rutas
+│   │   ├── middleware/      # Auth, validación, roles
+│   │   ├── models/          # Modelos Mongoose (User, Report, Office)
+│   │   ├── routes/          # Definición de endpoints
+│   │   ├── schemas/         # Schemas Zod para validación
+│   │   ├── services/        # Lógica de negocio
+│   │   └── server.ts        # Punto de entrada
+│   ├── Dockerfile
+│   └── package.json
+│
+├── 📂 frontend/
+│   ├── src/
+│   │   ├── config/          # Configuraciones
+│   │   ├── general-components/  # Componentes reutilizables
+│   │   ├── layouts/         # Layouts de páginas
+│   │   ├── pages/           # Páginas de la app
+│   │   ├── services/        # API calls
+│   │   ├── store/           # Redux store
+│   │   ├── App.tsx          # Componente principal
+│   │   └── main.tsx         # Punto de entrada
+│   ├── Dockerfile
+│   └── package.json
+│
+├── 📂 mongodb/
+│   └── init-mongo.js        # Script de inicialización
+│
+├── docker-compose.yml
+├── Makefile
+├── .env                     # Variables de entorno (no incluido)
+└── .env-example             # Ejemplo de configuración
+```
+
+---
+
+## 🌐 API Endpoints
+
+### 🔐 Autenticación (`/api/v1/auth`)
+
+| Método | Endpoint | Descripción | Roles |
+|--------|----------|-------------|-------|
+| `POST` | `/register` | Registrar nuevo usuario | `admin` |
+| `POST` | `/login` | Iniciar sesión | Público |
+| `POST` | `/logout` | Cerrar sesión | Autenticado |
+
+### 🎫 Reportes (`/api/v1/reports`)
+
+| Método | Endpoint | Descripción | Roles |
+|--------|----------|-------------|-------|
+| `POST` | `/` | Crear nuevo reporte (con imagen) | Autenticado |
+| `GET` | `/` | Obtener historial de reportes | Autenticado |
+| `GET` | `/:id` | Obtener detalles de un reporte | Autenticado |
+| `PATCH` | `/:id/status` | Actualizar estado del reporte | `service_desk`, `admin` |
+
+**Estados disponibles:** `open` → `assigned` → `in-progress` → `closed`
+
+### 🏢 Oficinas (`/api/v1/offices`)
+
+| Método | Endpoint | Descripción | Roles |
+|--------|----------|-------------|-------|
+| `POST` | `/` | Crear nueva oficina | `admin` |
+| `GET` | `/` | Listar todas las oficinas | Autenticado |
+
+---
+
+## 🚀 Instalación y Uso
+
+### Prerrequisitos
+
+- Docker & Docker Compose
+- Make (opcional, para usar comandos simplificados)
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/adiaz-uf/ServiceDeskai.git
+cd ServiceDeskai
+```
+
+### 2. Configurar variables de entorno
+
+```bash
+cp .env-example .env
+# Editar .env con tus configuraciones
+```
+
+### 3. Iniciar los servicios
+
+```bash
+# Usando Make
 make up
+
+# O usando Docker Compose directamente
+docker compose up -d --build
 ```
 
-2) Parar los contenedores:
+### 4. Acceder a la aplicación
 
-```
-make down
-```
+| Servicio | URL |
+|----------|-----|
+| 🌐 Frontend | http://localhost:3000 |
+| 🔧 Backend API | http://localhost:9000/api/v1 |
+| 🗄️ Mongo Express | http://localhost:8081 |
 
-3) Parada completa y limpieza de volúmenes:
+---
 
-```
-make fclean
-```
+## ⚙️ Comandos Makefile
 
-4) Reconstruir todo (quita, reconstruye y levanta):
+```bash
+make up          # Levantar todos los contenedores
+make down        # Parar contenedores
+make fclean      # Limpiar todo (volumes, etc.)
+make re          # Reconstruir desde cero
 
-```
-make re
-```
+make re-backend  # Reconstruir solo backend
+make re-frontend # Reconstruir solo frontend
+make db-reset    # Resetear base de datos
 
-5) Reconstruir sólo backend o frontend:
-
-```
-make re-backend
-make re-frontend
-```
-
-6) Logs y estado
-
-```
-make logs       # logs de todos los servicios (seguimiento)
-make lb         # logs del backend
-make lf         # logs del frontend
-make ps         # ver contenedores
+make logs        # Ver logs de todos los servicios
+make lf          # Logs de frontend
+make lb          # Logs de backend  
+make ld          # Logs de MongoDB
+make ps          # Estado de contenedores
 ```
 
-7) Reset de la base de datos:
+---
 
+## 🔧 Configuración de Email (Opcional)
+
+Para habilitar las notificaciones por email, configura en tu `.env`:
+
+```env
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=tu-email@gmail.com
+EMAIL_PASS=tu-app-password
 ```
-make db-reset
+
+> **Nota:** Para Gmail, necesitas generar una [contraseña de aplicación](https://support.google.com/accounts/answer/185833).
+
+---
+
+## 🤖 Configuración de Gemini AI
+
+1. Obtén una API key en [Google AI Studio](https://aistudio.google.com/apikey)
+2. Añádela a tu `.env`:
+
+```env
+GEMINI_API_KEY=tu-api-key
 ```
 
-**URLs útiles (por defecto según `.env`)**
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:9000` (ajusta `BACKEND_URL`/`BACKEND_PORT` si modificas)
-- Mongo Express (GUI): `http://localhost:8081`
-- Imágenes subidas: `http://<BACKEND_URL>:<BACKEND_PORT>/uploads/<filename>`
+La IA analizará automáticamente las imágenes de los reportes y generará descripciones cuando no se proporcione una manualmente.
 
+---
 
-**Dependencias y SDKs de IA**
-- En `backend/package.json` está `@google/generative-ai` y la app usa la variable `GEMINI_API_KEY` para llamar a Gemini. Asegúrate de tener la clave configurada en `.env`.
+## 📝 Licencia
 
+Este proyecto está bajo la licencia ISC.
 
-**API - Endpoints principales (detalle)**
+---
 
-Base path: `/api/v1`
+<div align="center">
 
-Auth
-- 🟦 `POST /api/v1/auth/register` — Registrar nuevo usuario. Body: `{ name, email, username, password }`. Validación aplicada. (Público)
-- 🟦 `POST /api/v1/auth/login` — Iniciar sesión. Body: `{ username, password }`. Devuelve tokens JWT. (Público)
-- 🟦 `POST /api/v1/auth/logout` — Cerrar sesión / invalidar refresh token. Requiere JWT.
+**Hecho con ❤️ para mejorar la gestión de incidencias IT**
 
-Reports
-- 🟦 `POST /api/v1/reports` — Crear un nuevo reporte. Tipo: `multipart/form-data`. Campos: `image` (file), `office` (id), `description` (opcional), `sharedWith` (email opcional). Requiere JWT.
-- 🟩 `GET /api/v1/reports` — Obtener historial de reportes. Si el usuario tiene rol `user`, devuelve solo sus reportes; roles `service_desk`/`admin` ven todos. Requiere JWT.
-- 🟩 `GET /api/v1/reports/:id` — Obtener detalles de un reporte por id. Requiere JWT y control de acceso (usuario propietario o roles administrativos).
-- 🟨 `PATCH /api/v1/reports/:id/status` — Actualizar estado del reporte. Body: `{ status }` donde `status` es uno de `open | assigned | in-progress | closed`. Requiere JWT y rol `service_desk` o `admin`.
-
-Offices
-- 🟦 `POST /api/v1/offices` — Crear una oficina. Requiere JWT y rol `admin`.
-- 🟩 `GET /api/v1/offices` — Listar todas las oficinas. Requiere JWT.
-
-Profile / Usuarios
-- 🟩 `GET /api/v1/profile` — Obtener perfil del usuario autenticado. Requiere JWT.
-- 🟦 `PUT /api/v1/profile` — Actualizar perfil (nombre, email, username, etc.). Requiere JWT.
-- 🟦 `POST /api/v1/profile/users` — Crear usuario (para administradores). Body: datos del usuario. Requiere JWT y rol `admin`.
-- 🟩 `GET /api/v1/profile/users` — Listar usuarios (solo `admin`). Requiere JWT y rol `admin`.
-
-Archivos / Imágenes
-- 🟩 Las imágenes subidas se sirven desde la ruta pública `/uploads/<filename>` en el backend. URL completa por defecto: `http://<BACKEND_URL>:<BACKEND_PORT>/uploads/<filename>`.
+</div>
