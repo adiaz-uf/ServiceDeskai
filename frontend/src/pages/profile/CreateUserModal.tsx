@@ -60,9 +60,9 @@ export default function RegisterForm({ isOpen, onClose }: CreateUserModalProps) 
   return (
     <>
 		<div className="fixed inset-0 bg-black/50 flex items-center p-8 justify-center z-50">
-      <div className="fixed top-4 right-4 z-50">
-        <MessageBox type={message.type || 'error'} message={message.text} show={message.show} />
-      </div>
+			<div className="fixed top-4 right-4 z-50">
+				<MessageBox type={message.type || 'error'} message={message.text} show={message.show} />
+			</div>
       <Card className='w-full'>
         <CardContent className="p-8">
           <h1 className="text-2xl font-bold text-center text-ui-primary mb-6">

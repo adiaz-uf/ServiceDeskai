@@ -65,21 +65,8 @@ function ProfilePage() {
         user.userRole === 'admin' &&
         (
           <>
-            <div className="fixed bottom-28 right-4 z-50">
-              <Button 
-                className='text-4xl !rounded-full !p-4'
-                onClick={() => setShowCreateUser(true)}
-              >
-                <FaUserPlus />
-              </Button>
-            </div>
-      
-            <CreateUserModal
-              isOpen={showCreateUser} 
-              onClose={() => setShowCreateUser(false)}
-            />
-
-            <div className="fixed bottom-48 right-4 z-50">
+            {/* Create office button */}
+            <div className="fixed bottom-48 right-4 z-40">
               <Button 
                 className='text-4xl !rounded-full !p-4'
                 onClick={() => setShowCreateOffice(true)}
@@ -91,6 +78,21 @@ function ProfilePage() {
             <CreateOfficeModal
               isOpen={showCreateOffice} 
               onClose={() => setShowCreateOffice(false)}
+            />
+
+            {/* Create user button */}
+            <div className="fixed bottom-28 right-4 z-40">
+              <Button 
+                className='text-4xl !rounded-full !p-4'
+                onClick={() => setShowCreateUser(true)}
+              >
+                <FaUserPlus />
+              </Button>
+            </div>
+      
+            <CreateUserModal
+              isOpen={showCreateUser} 
+              onClose={() => setShowCreateUser(false)}
             />
           </>
         )
