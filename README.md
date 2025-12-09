@@ -30,19 +30,16 @@
 
 ---
 
-<img width="429" height="936" alt="Screenshot from 2025-12-09 12-29-35" src="https://github.com/user-attachments/assets/e4c7b950-0fdf-415f-bb30-f2e229857267" />
-<img width="429" height="930" alt="Screenshot from 2025-12-09 12-30-09" src="https://github.com/user-attachments/assets/961accd2-df9e-4b79-9768-4c922911ca89" />
-<img width="429" height="930" alt="Screenshot from 2025-12-09 12-30-16" src="https://github.com/user-attachments/assets/7c168a52-253c-4876-870f-e9e37b1929de" />
-<img width="429" height="930" alt="Screenshot from 2025-12-09 12-30-22" src="https://github.com/user-attachments/assets/a39b15fe-609d-4bce-a8f8-cbc1887b749b" />
-
-<img width="429" height="930" alt="Screenshot from 2025-12-09 12-32-11" src="https://github.com/user-attachments/assets/c87dec72-6d43-4d16-a6c3-02fcc83aa45c" />
-<img width="427" height="929" alt="Screenshot from 2025-12-09 12-35-58" src="https://github.com/user-attachments/assets/9029ce5a-86ce-4a5a-9534-79d67946a150" />
-
-<img width="429" height="930" alt="Screenshot from 2025-12-09 12-30-54" src="https://github.com/user-attachments/assets/2224f027-3289-4192-a792-fc64c4232e20" />
-<img width="429" height="930" alt="Screenshot from 2025-12-09 12-31-25" src="https://github.com/user-attachments/assets/29a89fda-d52b-4fdb-b894-6fee83f9c5ce" />
-
-
----
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+	<img src="https://github.com/user-attachments/assets/e4c7b950-0fdf-415f-bb30-f2e229857267" alt="Screenshot 1" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/961accd2-df9e-4b79-9768-4c922911ca89" alt="Screenshot 2" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/7c168a52-253c-4876-870f-e9e37b1929de" alt="Screenshot 3" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/a39b15fe-609d-4bce-a8f8-cbc1887b749b" alt="Screenshot 4" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/c87dec72-6d43-4d16-a6c3-02fcc83aa45c" alt="Screenshot 5" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/9029ce5a-86ce-4a5a-9534-79d67946a150" alt="Screenshot 6" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/2224f027-3289-4192-a792-fc64c4232e20" alt="Screenshot 7" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+	<img src="https://github.com/user-attachments/assets/29a89fda-d52b-4fdb-b894-6fee83f9c5ce" alt="Screenshot 8" style="max-width: 23%; min-width: 220px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+</div>
 
 ## 🏗️ Stack Tecnológico
 
